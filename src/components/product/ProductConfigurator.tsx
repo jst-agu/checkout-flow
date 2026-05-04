@@ -52,6 +52,34 @@ const CONFIGS: Record<string, Config> = {
     colors: ["Natural", "Slate", "Olive"],
     toggles: [{ key: "organizer", label: "Organizer", description: "Internal insert with pockets" }],
   },
+  "bmw-x6-model": {
+    colors: ["Alpine White", "Onyx Black", "Glacier Silver"],
+    toggles: [
+      { key: "careKit", label: "Detailing kit", description: "Cloth + polish for display care" },
+      { key: "giftWrap", label: "Gift wrap", description: "Premium wrap + note card" },
+    ],
+  },
+  "gle63-model": {
+    colors: ["Obsidian", "Polar White", "Graphite"],
+    toggles: [
+      { key: "careKit", label: "Detailing kit", description: "Cloth + polish for display care" },
+      { key: "giftWrap", label: "Gift wrap", description: "Premium wrap + note card" },
+    ],
+  },
+  "lambo-model": {
+    colors: ["Verde", "Nero", "Rosso"],
+    toggles: [
+      { key: "monogram", label: "Name plate", description: "Engraved collector plate" },
+      { key: "giftWrap", label: "Gift wrap", description: "Premium wrap + note card" },
+    ],
+  },
+  "rolls-royce-model": {
+    colors: ["Pearl", "Midnight", "Satin Silver"],
+    toggles: [
+      { key: "monogram", label: "Name plate", description: "Engraved collector plate" },
+      { key: "giftWrap", label: "Gift wrap", description: "Premium wrap + note card" },
+    ],
+  },
 };
 
 function Pill({

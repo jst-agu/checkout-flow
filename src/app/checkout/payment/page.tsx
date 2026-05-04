@@ -33,6 +33,31 @@ function BrandBadge({ label }: { label: string }) {
   );
 }
 
+function formatCardNumber(value: string) {
+  const digits = value.replace(/\D/g, "").slice(0, 19);
+  const groups = digits.match(/.{1,4}/g) ?? [];
+  return groups.join(" ");
+}
+
+function formatExpiry(value: string) {
+  let digits = value.replace(/\D/g, "").slice(0, 4);
+  if (digits.length === 1) {
+    const d = Number(digits);
+    if (d > 1) digits = `0${digits}`;
+  }
+  if (digits.length <= 2) return digits;
+  return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+}
+
+function isValidExpiry(value: string) {
+  const [mm, yy] = value.split("/");
+  if (!mm || !yy) return false;
+  if (!/^\d{2}$/.test(mm) || !/^\d{2}$/.test(yy)) return false;
+  const month = Number(mm);
+  if (month < 1 || month > 12) return false;
+  return true;
+}
+
 function randomHex(byteLength: number) {
   const bytes = new Uint8Array(byteLength);
   globalThis.crypto.getRandomValues(bytes);
@@ -77,8 +102,8 @@ function DemoPaymentForm({
   const [simulateFailure, setSimulateFailure] = useState(false);
 
   const digits = cardNumber.replace(/\D/g, "");
-  const expiryOk = /^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry.trim());
-  const cvcOk = /^\d{3,4}$/.test(cvc.trim());
+  const expiryOk = isValidExpiry(expiry.trim());
+  const cvcOk = /^\d{3,4}$/.test(cvc.trim().replace(/\D/g, ""));
   const cardOk = digits.length >= 12 && digits.length <= 19;
   const nameOk = cardholder.trim().length >= 2;
 
@@ -144,28 +169,31 @@ function DemoPaymentForm({
         <Input
           label="Card number"
           value={cardNumber}
-          onChange={(e) => setCardNumber(e.target.value)}
+          onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
           placeholder="4242 4242 4242 4242"
           inputMode="numeric"
+          maxLength={23}
           autoComplete="cc-number"
-          hint="Ends with 0000 to simulate a failure."
+          hint="Type digits only. Ends with 0000 to simulate a failure."
         />
 
         <div className="grid gap-4 sm:grid-cols-2">
           <Input
             label="Expiry"
             value={expiry}
-            onChange={(e) => setExpiry(e.target.value)}
+            onChange={(e) => setExpiry(formatExpiry(e.target.value))}
             placeholder="MM/YY"
             inputMode="numeric"
+            maxLength={5}
             autoComplete="cc-exp"
           />
           <Input
             label="CVC"
             value={cvc}
-            onChange={(e) => setCvc(e.target.value)}
+            onChange={(e) => setCvc(e.target.value.replace(/\D/g, "").slice(0, 4))}
             placeholder="123"
             inputMode="numeric"
+            maxLength={4}
             autoComplete="cc-csc"
           />
         </div>
