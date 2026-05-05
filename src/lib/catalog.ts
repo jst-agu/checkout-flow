@@ -40,7 +40,7 @@ export const PRODUCTS: Product[] = [
     name: "BMW X6 Scale Model",
     description: "Die-cast detail, premium finish, display-ready build.",
     priceCents: 21900,
-    imageDataUri: "/bmw-x6.png",
+    imageDataUri: "/bmw-m4-coupe.png",
   },
   {
     id: "gle63-model",
