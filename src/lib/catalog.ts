@@ -37,7 +37,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "bmw-x6-model",
-    name: "BMW X6 Scale Model",
+    name: "BMW M4 Coupe Scale Model",
     description: "Die-cast detail, premium finish, display-ready build.",
     priceCents: 21900,
     imageDataUri: "/bmw-m4-coupe.png",
